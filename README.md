@@ -1,20 +1,31 @@
 # Arduino-Nexa
 
-
-
 ## Overview
 
-Use Arduino, 433Mhz transmitter,receiver and Nexa remote switch to turn on and off real lamp.
+Use Arduino, 433Mhz transmitter,receiver and Nexa remote switch to turn on and off real electric device
 
-### Step 1: Material 
+## HW requirements
 
-- Arduino uno board
+- Arduino Nano board
 + Jumper wires
 + [433Mhz Transimitter](http://www.kjell.com/sortiment/el/elektronik/fjarrstyrning/433-mhz-sandarmodul-p88901)  
 + [433Mhz receiver](http://www.kjell.com/sortiment/el/elektronik/fjarrstyrning/433-mhz-mottagarmodul-p88900)
 - Standard solderless breadboard
 - [Nexa remote switch](http://www.nexa.se/EYCR2300.htm)
-- Lamp
+
+## SW requirements
+
+- [Arduino IDE](https://www.arduino.cc/en/main/software)
+
+## Preparations
+
+### 1 Read sender ID
+
+In order to use the following script you will first need to get sender ID from remote controller.
+
+#### Setup Arduino and 433 Mhz and receiver
+
+
 
 ### Step 2: Set up Arduino with 433Mhz transimitter and receiver
 
