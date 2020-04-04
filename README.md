@@ -1,67 +1,83 @@
 # Arduino-Nexa
 
-
-
 ## Overview
 
-Use Arduino, 433Mhz transmitter,receiver and Nexa remote switch to turn on and off real lamp.
+Use Arduino, 433Mhz transmitter,receiver and Nexa remote switch to turn on and off real electric device
 
-### Step 1: Material 
+## HW requirements
 
-- Arduino uno board
+- Arduino Nano board
 + Jumper wires
 + [433Mhz Transimitter](http://www.kjell.com/sortiment/el/elektronik/fjarrstyrning/433-mhz-sandarmodul-p88901)  
 + [433Mhz receiver](http://www.kjell.com/sortiment/el/elektronik/fjarrstyrning/433-mhz-mottagarmodul-p88900)
 - Standard solderless breadboard
 - [Nexa remote switch](http://www.nexa.se/EYCR2300.htm)
-- Lamp
 
-### Step 2: Set up Arduino with 433Mhz transimitter and receiver
+## SW requirements
 
+- [Arduino IDE](https://www.arduino.cc/en/main/software)
 
-
-![alt text](https://raw.githubusercontent.com/TokyoBirdy/Arduino-Nexa/master/arduino%20set%20up.JPG)
-
-
-[This link](http://www.kjell.com/sortiment/el/elektronik/fjarrstyrning/433-mhz-sandarmodul-p88901#ProductDetailedInformation) has a pretty explanation about datasheet about transmitter, and [this one](http://www.kjell.com/sortiment/el/elektronik/fjarrstyrning/433-mhz-mottagarmodul-p88900#ProductDetailedInformation) for receiver. After you read through the datasheets, you should be able to understand how to connect the pins to the arduino. 
+## Preparations
 
 
+### 1. Setup Nexa
+
+Setup your nexa remote switch with your desired electronic, e.g. lamp based on instructions that you received when bought nexa device. Pair it it with the remote where you read the sender id
+
+### 2. Read sender ID
+
+In order to use the following script you will first need to get sender ID from remote controller.
+
+#### Setup Arduino and 433 MHz receiver
+
+Connect RF receiver data cable to Arduino D2 port.
+
+Connect RF receiver VCC to 5V pin and GND to Arduino GND.
+
+![Arduino RF receiver diagram](https://github.com/Atihinen/Arduino-Nexa/raw/master/media/receiver_diagram.png)
+
+#### Read the ID with Arduino
+
+Deploy rf_receiver.ino to Arduino from receiver/rf_receiver.ino
+
+Open serial monitor to correct port and press the desired button from remote to read sender id, recipient and group.
+
+![Serial monitor results](https://github.com/Atihinen/Arduino-Nexa/raw/master/media/receive_ino_serial_monitor.png)
+
+You should get something like this if the connections are done correctly.
 
 
-### Step 3: Use Nexa with Lamp
+### 3. Start using your arduino as remote
 
-![alt text](https://raw.githubusercontent.com/TokyoBirdy/Arduino-Nexa/master/nexa%20set%20up%20.JPG)
+#### Setup Arduino and 433MHz transmitter
+
+Connect RF transmitter data cable to Arduino D13 port.
+
+Connect RF transmitter VCC to 5V pin and GND to Arduino GND.
+
+![Arduino RF transmitter diagram](https://github.com/Atihinen/Arduino-Nexa/raw/master/media/transmitter_diagram.png)
+
+#### Setup the code
+
+Create `secrets.h` same folder where `homeeasyhacking.ino` file is, with following content:
+
+```
+#ifndef PAYLOAD
+#include "payload.h"
+#endif
+struct Payload payload {<sender>, <recipient>, false, <group(true|false)>}
+```
+
+Sender, recipient and group can be read with `rf_receiver.ino` script.
+
+Define the `INPUT` type in `homeeasyacking.ino` where:
+  - 0 is the demo, where the transmitter will send on and off with certain interval
+  - 1 is for serial port. When you send 1, the transmitter will send on and when you send 0, the transmitter will send 0.
+
+  Deploy the `homeeasyhacking.ino` to arduino and enjoy controlling your electronic devices.
+
+  # Tested hardware
+
+  * [Nexa MYC-3](https://www.clasohlson.com/fi/Kaukokytkinsarja-Nexa-MYC-3,-3-kpl/p/Pr366902000)
 
 
-
-### Step 4: Receiver test 
-
-Run rf_receiver.ino on Arduino, you should be able to see output. Mine looks like this
-
-	sender 15556058
-	no group
-	on
-	recipient 13
-
-	sender 15556058
-	no group
-	off
-	recipient 13
-
-
-### Step 5: Final step! Hack
-
-Change the data in homehackingeasy.ino according to the result we got from the above. 
-
-	unsigned long sender = 2051610;
-	unsigned int recipient = 0;
-	bool command = true;
-	bool group = false;
-	
-Now run^^
-
-
-
-### Youtube video  
-
-[Arduino and nexa to turn on and off real lamp](https://youtu.be/ymzCeY9fIyU)
