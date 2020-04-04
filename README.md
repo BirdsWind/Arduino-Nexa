@@ -20,7 +20,7 @@ Use Arduino, 433Mhz transmitter,receiver and Nexa remote switch to turn on and o
 ## Preparations
 
 
-### 1. Setup nexa
+### 1. Setup Nexa
 
 Setup your nexa remote switch with your desired electronic, e.g. lamp based on instructions that you received when bought nexa device. Pair it it with the remote where you read the sender id
 
@@ -40,7 +40,7 @@ Connect RF receiver VCC to 5V pin and GND to Arduino GND.
 
 Deploy rf_receiver.ino to Arduino from receiver/rf_receiver.ino
 
-Open serial monitor to correct port and press the desired button from remote to read sender id.
+Open serial monitor to correct port and press the desired button from remote to read sender id, recipient and group.
 
 
 ### 3. Start using your arduino as remote
@@ -55,5 +55,25 @@ Connect RF transmitter VCC to 5V pin and GND to Arduino GND.
 
 #### Setup the code
 
-Use payload struct from `payload.h` to create needed commands based on the values that you received with `rf_receiver.ino`.
+Create `secrets.h` same folder where `homeeasyhacking.ino` file is, with following content:
+
+```
+#ifndef PAYLOAD
+#include "payload.h"
+#endif
+struct Payload payload {<sender>, <recipient>, false, <group(true|false)>}
+```
+
+Sender, recipient and group can be read with `rf_receiver.ino` script.
+
+Define the `INPUT` type in `homeeasyacking.ino` where:
+  - 0 is the demo, where the transmitter will send on and off with certain interval
+  - 1 is for serial port. When you send 1, the transmitter will send on and when you send 0, the transmitter will send 0.
+
+  Deploy the `homeeasyhacking.ino` to arduino and enjoy controlling your electronic devices.
+
+  # Tested hardware
+
+  * [Nexa MYC-3](https://www.clasohlson.com/fi/Kaukokytkinsarja-Nexa-MYC-3,-3-kpl/p/Pr366902000)
+
 
