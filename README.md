@@ -42,6 +42,10 @@ Deploy rf_receiver.ino to Arduino from receiver/rf_receiver.ino
 
 Open serial monitor to correct port and press the desired button from remote to read sender id, recipient and group.
 
+![Serial monitor results](https://github.com/Atihinen/Arduino-Nexa/raw/master/media/receive_ino_serial_monitor.png)
+
+You should get something like this if the connections are done correctly.
+
 
 ### 3. Start using your arduino as remote
 
