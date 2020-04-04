@@ -3,6 +3,9 @@
  */
 
 #include "HomeEasy.h"
+#include "payload.h"
+
+struct Payload payload;
 
 HomeEasy homeEasy;
 
@@ -12,6 +15,11 @@ HomeEasy homeEasy;
  */
 void setup()
 {
+	// Define payload e.g. in setup
+	payload.sender = -1; // read value with receiver.ino
+	payload.recipient = -1; // read value with receiver.ino
+	payload.command = true; // need to define in code, sets device on or off
+	payload.group = false; // read value with receiver.ino
 	Serial.begin(9600);
 	
 	homeEasy = HomeEasy();
@@ -28,15 +36,12 @@ void setup()
  */
 void loop()
 {
+  payload.command = true;
   delay(3000);
-	unsigned long sender = 2051610;
-	unsigned int recipient = 0;
-	bool command = true;
-	bool group = false;
-  homeEasy.sendAdvancedProtocolMessage(sender, recipient, command, group);
+  homeEasy.sendAdvancedProtocolMessage(payload.sender, payload.recipient, payload.command, payload.group);
   delay(3000);
-  command = false;
-  homeEasy.sendAdvancedProtocolMessage(sender, recipient, command, group);
+  payload.command = false;
+  homeEasy.sendAdvancedProtocolMessage(payload.sender, payload.recipient, payload.command, payload.group);
 }
 
 

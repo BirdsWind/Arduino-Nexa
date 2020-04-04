@@ -55,4 +55,5 @@ Connect RF transmitter VCC to 5V pin and GND to Arduino GND.
 
 #### Setup the code
 
-TBD
+Use payload struct from `payload.h` to create needed commands based on the values that you received with `rf_receiver.ino`.
+
